@@ -29,9 +29,6 @@ class Suggestions(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.suggestion_channel = 865920296660500552
-        self.approve_emoji = self.bot.get_emoji(866363506071437352)
-        self.shrug_emoji = self.bot.get_emoji(865733569003782194)
-        self.deny_emoji = self.bot.get_emoji(866348776851111936)
 
     @commands.Cog.listener()
     async def on_message(self, message):
@@ -43,9 +40,9 @@ class Suggestions(commands.Cog):
         await message.delete()
         msg = await message.channel.send(embed=embed)
         await self.bot.db.suggestions.insert_one({"id": suggestion_id, "user": str(message.author.id), "message": str(msg.id)})
-        await msg.add_reaction(self.approve_emoji)
-        await msg.add_reaction(self.shrug_emoji)
-        await msg.add_reaction(self.deny_emoji)
+        await msg.add_reaction(self.bot.get_emoji(866363506071437352))
+        await msg.add_reaction(self.bot.get_emoji(865733569003782194))
+        await msg.add_reaction(self.bot.get_emoji(866348776851111936))
 
     @cog_ext.cog_subcommand(base="suggestion", name="approve", description="Approve a suggestion!", guild_ids=[865711881075163166], base_default_permission=False,
     options=[{"name": "suggestion_id", "description": "The id of the suggestion.", "type": 4, "required": True},
