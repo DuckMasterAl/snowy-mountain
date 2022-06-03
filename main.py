@@ -1,4 +1,4 @@
-import discord, tokens, os, sys
+import discord, tokens, os, sys, wavelink
 from discord.ext import commands
 from discord_slash import SlashCommand
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -19,6 +19,7 @@ slash = SlashCommand(client=client, sync_commands=True, override_type=True, sync
 
 db_client = AsyncIOMotorClient(tokens.mongo)# Mongo
 client.db = db_client.bot
+client.wavelink = wavelink.Client(bot=client)# Wavelink
 
 client.load_extension('jishaku')# Load Cogs
 for x in os.listdir('/root/Snow/cogs' if sys.platform == 'linux' else '/Users/duckmasteral/Documents/Github.nosync/snowy-mountain/cogs'):
